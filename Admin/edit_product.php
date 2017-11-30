@@ -4,12 +4,18 @@ $conn = new mysqli($host,$user,$pass,$dbname);
 
 include_once("header.php");
 
+$id = $_GET["produto"];
+
 if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
     $nome = $_POST["nome"];
     $preco = $_POST["preco"];
-    $sql = "INSERT INTO produtos (nome, valor) VALUES('$nome','$preco')";
-    $conn->query($sql);
+    $sql1 = "UPDATE produtos SET nome = '$nome', valor = '$preco' WHERE id = '$id'";
+    $conn->query($sql1);
 } 
+
+    $sql = "SELECT * FROM produtos WHERE id = '$id'";
+
+    foreach($conn->query($sql) as $row){
 
  echo'<!--sidebar start-->
       <aside>
@@ -54,11 +60,11 @@ if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
                 <div class="col-lg-8">
                   <form  action="" method="POST">  
                     <h3>Nome</h3>
-                    <input type="text" class="form-control" name="nome" placeholder="nome..">
+                    <input type="text" class="form-control" name="nome" placeholder="nome.." value="' . $row['nome'] . '">
                     <h3>Image</h3>
                     <input type="file" class="form-control" name="foto">
                     <h3>Preço</h3>
-                    <input type="text" class="form-control" name="preco" placeholder="preço..">
+                    <input type="text" class="form-control" name="preco" placeholder="preço.." value="' . $row['valor'] . '">
                     <h3>Detalhes</h3>
                     <!-- <div class="panel panel-default"> -->
                       <div class="panel-heading" >
@@ -98,6 +104,8 @@ if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
                     selector: "#tinymce_full",
                 });
             });
+
     </script>
   </body>
 </html>';
+        }
