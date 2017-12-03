@@ -3,8 +3,8 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+					<p class="pull-left">Copyright © 2017 Loja Fam. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="grupo.html">DevAugusta</a></span></p>
 				</div>
 			</div>
 		</div>
@@ -39,6 +39,50 @@
 
           $('.fancybox').fancybox();
           });
+
+
+		  function adicionarProduto(id){
+			$.post('cart.php',
+			{
+				acao: 'up',
+				product: id
+			},
+			function(){
+				location.reload();
+			});
+		};
+		
+		 function diminuirProduto(id){
+			$.post('cart.php',
+			{
+				acao: 'down',
+				product: id
+			},
+			function(){
+				location.reload();
+			});
+		};
+
+		function deletar(id){
+			$.post('cart.php',
+			{
+				acao: 'del',
+				product: id
+			},
+			function(){
+				location.reload();
+			});
+		};
+
+		function apagarCarrinho(){
+			$.post('cart.php',
+			{
+				acao: 'dropCart'
+			},
+			function(){
+				location.reload();
+			});
+		};
       </script>
 
     

@@ -5,10 +5,34 @@ $conn = new mysqli($host,$user,$pass,$dbname);
 include_once("header.php");
 
 if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
-    $nome = $_POST["nome"];
-    $preco = $_POST["preco"];
-    $sql = "INSERT INTO produtos (nome, valor) VALUES('$nome','$preco')";
-    $conn->query($sql);
+
+    $extensao = pathinfo($_FILES['foto']['name']);
+    $extensao = ".".$extensao['extension'];
+    $foto = time().uniqid(md5()).$extensao;
+
+    if(file_exists("../UI/images/home/$foto"))
+    {
+        $a = 1;
+        while(file_exists("../UI/images/home/[$a]$foto"))
+        {
+            $a++;    
+        }
+
+        $foto = "[".$a."]$foto";    
+    }
+
+    if(!move_uploaded_file($_FILES['foto']['tmp_name'], "../UI/images/home/".$foto))
+    {
+        echo "
+            <script type='text/javascript'>alert('Erro no upload do arquivo!')</script>";    
+    } else {
+
+        $nome = $_POST["nome"];
+        $preco = $_POST["preco"];
+        $sql = "INSERT INTO produtos (nome, valor, img) VALUES('$nome','$preco', '$foto')";
+        $conn->query($sql);
+        header("Location:view_product.php"); 
+    }
 } 
 
  echo'<!--sidebar start-->
@@ -52,11 +76,11 @@ if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
                  <div class="col-lg-1">
                 </div>
                 <div class="col-lg-8">
-                  <form  action="" method="POST">  
+                  <form  action="" method="POST" enctype="multipart/form-data">  
                     <h3>Nome</h3>
                     <input type="text" class="form-control" name="nome" placeholder="nome..">
                     <h3>Image</h3>
-                    <input type="file" class="form-control" name="foto">
+                    <input type="file" class="form-control" name="foto" accept="image/png, image/jpeg, image/jpg">
                     <h3>Preço</h3>
                     <input type="text" class="form-control" name="preco" placeholder="preço..">
                     <h3>Detalhes</h3>

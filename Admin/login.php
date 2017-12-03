@@ -1,4 +1,4 @@
-<?php
+<?php include_once "functions.php";
 require_once('connection.inc.php');
 $conn = new mysqli($host,$user,$pass,$dbname);
 
@@ -9,6 +9,7 @@ if (isset($_POST["usuario"]) && !empty($_POST["usuario"])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $_SESSION["usuarioLogado"] = 1;
         header("Location:index.php");
     } else {
         header("Location:login.php?auth=0");

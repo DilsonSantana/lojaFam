@@ -7,10 +7,36 @@ include_once("header.php");
 $id = $_GET["produto"];
 
 if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
-    $nome = $_POST["nome"];
-    $preco = $_POST["preco"];
-    $sql1 = "UPDATE produtos SET nome = '$nome', valor = '$preco' WHERE id = '$id'";
-    $conn->query($sql1);
+    $extensao1 = pathinfo($_FILES['foto']['name']);
+    $extensao1 = ".".$extensao1['extension'];
+    $foto = time().uniqid(md5()).$extensao1;
+
+    if(file_exists("../UI/images/home/$foto"))
+    {
+        $a = 1;
+        while(file_exists("../UI/images/home/[$a]$foto"))
+        {
+            $a++;    
+        }
+
+        $foto = "[".$a."]$foto";    
+    }
+    var_dump($foto);
+    if(!move_uploaded_file($_FILES['foto']['tmp_name'], "../UI/images/home/".$foto))
+    {
+        $nome = $_POST["nome"];
+        $preco = $_POST["preco"];
+        $sql1 = "UPDATE produtos SET nome = '$nome', valor = '$preco' WHERE id = '$id'";
+        $conn->query($sql1);
+        header("Location:view_product.php");    
+    } else {
+
+        $nome = $_POST["nome"];
+        $preco = $_POST["preco"];
+        $sql1 = "UPDATE produtos SET nome = '$nome', valor = '$preco', img = '$foto' WHERE id = '$id'";
+        $conn->query($sql1);
+        header("Location:view_product.php"); 
+    }
 } 
 
     $sql = "SELECT * FROM produtos WHERE id = '$id'";
@@ -45,11 +71,11 @@ if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
           <section class="wrapper">
       		  <div class="row">
       				<div class="col-lg-12">
-      					<h3 class="page-header"><i class="fa fa fa-bars"></i>Adicionar Produto</h3>
+      					<h3 class="page-header"><i class="fa fa fa-bars"></i>Editar Produto</h3>
       					<ol class="breadcrumb">
       						<li><i class="fa fa-home"></i><a href="index.php">Home</a></li>
       						<li><i class="fa fa-bars"></i>Produtos</li>
-      						<li><i class="fa fa-square-o"></i>Adicionar</li>
+      						<li><i class="fa fa-square-o"></i>Editar</li>
       					</ol>
       				</div>
       			</div>
@@ -58,24 +84,15 @@ if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
                  <div class="col-lg-1">
                 </div>
                 <div class="col-lg-8">
-                  <form  action="" method="POST">  
+                  <form  action="" method="POST" enctype="multipart/form-data">  
                     <h3>Nome</h3>
                     <input type="text" class="form-control" name="nome" placeholder="nome.." value="' . $row['nome'] . '">
                     <h3>Image</h3>
-                    <input type="file" class="form-control" name="foto">
+                    <input type="file" class="form-control" name="foto" accept="image/png, image/jpeg, image/jpg">
                     <h3>Preço</h3>
                     <input type="text" class="form-control" name="preco" placeholder="preço.." value="' . $row['valor'] . '">
-                    <h3>Detalhes</h3>
-                    <!-- <div class="panel panel-default"> -->
-                      <div class="panel-heading" >
-                        <!-- <div class="text-muted bootstrap-admin-box-title">TinyMCE Editor Full </div> -->
-                      </div>
-                      <div class="bootstrap-admin-panel-content">
-                          <textarea id="tinymce_full"  name="detalhes" rows="10"></textarea>
-                      </div>
-                    <!-- </div> -->
                     <br/>
-                    <input type="submit" value="Save" name="form_add_product" class="btn btn-primary" style="width:150px;float:right">
+                    <input type="submit" class="btn btn-primary" style="width:150px;float:right">
                   </form>
                 </div>
                 <div class="col-lg-3">
@@ -95,17 +112,6 @@ if (isset($_POST["nome"]) && !empty($_POST["nome"])) {
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jquery.nicescroll.js" type="text/javascript"></script><!--custome script for all page-->
     <script src="js/scripts.js"></script>
-
-    <script type="text/javascript" src="js/tinymce/js/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript">
-            $(function() {
-                // TinyMCE Full
-                tinymce.init({
-                    selector: "#tinymce_full",
-                });
-            });
-
-    </script>
   </body>
 </html>';
         }

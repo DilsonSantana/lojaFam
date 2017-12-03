@@ -1,153 +1,61 @@
 <?php include_once("header.php");
+$con = mysql_connect($host, $user, $pass) or  
+    die("Could not connect: " . mysql_error());  
+mysql_select_db($dbname);  
 
-	echo'<div class="header-middle"><!--header-middle-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="index.php"><img src="images/home/logo.png" alt="" /></a>
-						</div>
-					</div>
-					<div class="col-sm-8">
-						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="login.php"><i class="fa fa-lock"></i> Login</a></li>
-								<li><a href="cart.php"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-middle-->
-	
-		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-9">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-						<div class="mainmenu pull-left">
-							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.php" class="active">Home</a></li>
-								<li><a href="login.php" class="active">Login</a></li>
-								<li><a href="cart.php" class="active">Carrinho</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-bottom-->
-	</header><!--/header-->
-
-	<section id="cart_items">
+	echo'<section id="cart_items">
 		<div class="container">
-			<div class="breadcrumbs">
-				<ol class="breadcrumb">
-				  <li><a href="#">Home</a></li>
-				  <li class="active">Shopping Cart</li>
-				</ol>
-			</div>
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
 						<tr class="cart_menu">
-							<td class="image">Item</td>
-							<td class="description"></td>
-							<td class="price">Price</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td></td>
-						</tr>
+							<td style="text-align:center;">Item</td>
+							<td style="text-align:center;">Produto</td>
+							<td style="text-align:center;">Price</td>
+							<td style="text-align:center;">Quantity</td>';
+					
+							echo'<td style="text-align:center;">Total</td>';
+								if(COUNT($_SESSION['carrinho']) != 0){
+									echo'<td style="text-align:center;">
+										<input class="btn btn-primary" style="background:black;margin-top:0px;" type="text" name="apagarCarrinho" onclick="apagarCarrinho()" value="Excluir Carrinho">	
+									</td>';
+								}
+						echo'</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/two.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/three.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-					</tbody>
+					<tbody>';
+					foreach($_SESSION['carrinho'] as $id => $qtd){
+						$sql   = "SELECT *  FROM produtos WHERE id= '$id'";
+						$qr    = mysql_query($sql) or die(mysql_error());
+						$ln    = mysql_fetch_assoc($qr);
+						$valor = $ln['valor'] * $qtd;
+						
+						echo'<tr>
+						<td style="text-align:center;">
+									<a><img src="./UI/images/home/' . $ln['img'] . '" alt="" style="max-height:90px;max-width:90px;padding-right:10px;"></a>
+								</td>
+								<td style="text-align:center;">
+									<h4><a href="product_details.php?product=' . $ln['id'] . '">' . $ln['nome'] . '</a></h4>
+									<p>Web Id:  ' . $ln['id'] . '</p>
+								</td>
+								<td style="text-align:center;">
+									<p> R$ ' . $ln['valor'] . '</p>
+								</td>
+								<td style="text-align:center;">
+									<div class="cart_quantity_button">
+										<a class="cart_quantity_up" onclick="adicionarProduto(' . $ln['id'] . ')"> + </a>
+										<input class="cart_quantity_input" type="text" name="quantity" value="' . $qtd . '" autocomplete="off" size="2">
+										<a class="cart_quantity_down" onclick="diminuirProduto(' . $ln['id'] . ')"> - </a>
+									</div>
+								</td>
+								<td style="text-align:center;">
+									<p class="cart_total_price"> R$ ' . number_format($valor, 2, ',', ' ') . '</p>
+								</td>
+								<td style="text-align:center; margin: 20px 0px 0px 0px;" class="cart_delete">
+									<a class="cart_quantity_delete" onclick="deletar(' . $ln['id'] . ')"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>';
+					}
+			   echo'</tbody>
 				</table>
 			</div>
 		</div>
@@ -156,24 +64,36 @@
 	<section id="do_action">
 		<div class="container">
 			<div class="heading">
-				<h3>Checkout here please</h3>
+				<h3>Finalizar compra</h3>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="total_area">
-						<ul>
-							<li>Cart Sub Total <span>$59</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li style="color: #D62617;font-size:22px;">Total <span>$61</span></li>
+						<ul>';
+						$total = 0;
+						foreach($_SESSION['carrinho'] as $id => $qtd){
+							$sql   = "SELECT *  FROM produtos WHERE id= '$id'";
+							$qr    = mysql_query($sql) or die(mysql_error());
+							$ln    = mysql_fetch_assoc($qr);
+							$total += $qtd * $ln['valor'];
+						}
+					   echo'<li style="color: #D62617;font-size:22px;">Total <span> R$ ' . number_format($total, 2, ',', ' ') . '</span></li>
 						</ul>
-							<a style="margin-left: 45%" class="btn btn-primary" href="checkout.php">Check Out</a>
+						 	<div style="text-align:right">
+								<a class="btn btn-primary" href="compra.php">Finalizar</a>
+							</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 			</div>
 		</div>
-	</section><!--/#do_action-->';
+	</section><!--/#do_action-->
+	
 
+	';
 
+	
+
+	mysql_close($con);  
 	include_once("footer.php");

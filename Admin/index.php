@@ -1,4 +1,4 @@
-<?php 
+<?php include_once "functions.php";
 include_once("header.php");
 require_once('connection.inc.php');
 $conn = new mysqli($host,$user,$pass,$dbname);

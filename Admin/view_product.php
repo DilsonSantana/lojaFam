@@ -57,44 +57,23 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                           <table class="table table-striped table-advance table-hover">
                            <tbody>
                               <tr>
-                                 <th style="border: 1px solid #e3e3e3"><i class="icon_info_alt"></i> Id</th>
+                                 <th style="border: 1px solid #e3e3e3; width:50px;"><i class="icon_info_alt"></i> Id</th>
+                                 <th style="border: 1px solid #e3e3e3; width:70px;"><i class="icon_info_alt"></i> Foto </th>
                                  <th style="border: 1px solid #e3e3e3"><i class="icon_documents"></i> Nome</th>
                                  <th style="border: 1px solid #e3e3e3"><i class="icon_creditcard"></i> Preco</th>
                                  <th style="border: 1px solid #e3e3e3"><i class="icon_cogs"></i> Action</th>
                               </tr>';
-                    $sql = "SELECT * FROM produtos";
+                    $sql = "SELECT * FROM produtos ORDER BY id DESC";
                     foreach($conn->query($sql) as $row){  
                           echo'<tr>
-                                 <td style="border: 1px solid #e3e3e3">'.$row['id'].'</td>
+                                 <td style="border: 1px solid #e3e3e3;text-align:center; ">'.$row['id'].'</td>
+                                 <td style="border: 1px solid #e3e3e3; text-align:center; width:50px;"><img src="../UI/images/home/'.$row['img'].'" width="30" height="30"></td>
                                  <td style="border: 1px solid #e3e3e3">'.$row['nome'].'</td>
-                                 <td style="border: 1px solid #e3e3e3">'.$row['valor'].'</td>
+                                 <td style="border: 1px solid #e3e3e3">R$ ' . number_format($row['valor'], 2, ',', '.') . '</td>
                                  <td style="border: 1px solid #e3e3e3">
                                   <div class="btn-group">
-                                      <a class="btn btn-primary fancybox" href="#inline1"title="View image"><i class="icon_plus_alt2"></i></a>
-                                      <!--Fancy Box-->
-                                      <div id="inline1"style="display:none;width:700px;margin:10px 30px">
-                                        <h3 style= "border-bottom: 2px solid #295498; color:#0C86AC;margin-bottom:10px;" >Product Details</h3>
-                                        <div class="shopper-info">
-                                          <h4>Product Image</h4>
-                                          <img src="img/bg-1.jpg" width="450" height="400">
-                                          <h4>Product Details</h4>
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-                                          </p>
-                                          <h4>Product Size</h4>
-                                          <p>
-                                            <i class=" fa fa-arrow-right"> Small : <strong style="color: #FE980F">3</strong></i>
-                                          </p>
-                                          <p>
-                                            <i class=" fa fa-arrow-right"> Medium : <strong style="color: #FE980F">5</strong></i>
-                                          </p>
-                                          <p>
-                                            <i class=" fa fa-arrow-right"> Large : <strong style="color: #FE980F">2</strong></i>
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <!--Fancy box End-->
-                                      <a class="btn btn-success" href="edit_product.php?produto='.$row['id'].'" title="Edit this Product" href="#"><i class="icon_check_alt2"></i></a>
-                                      <a class="btn btn-danger"title="Delete This product" onclick="deletar('.$row['id'].')" ><i class="icon_close_alt2"></i></a>
+                                      <a class="btn btn-success" href="edit_product.php?produto='.$row['id'].'" title="Editar Produto" href="#">Editar</i></a>
+                                      <a class="btn btn-danger"title="Excluir Produto" onclick="deletar('.$row['id'].')" >Excluir</i></a>
                                   </div>
                                   </td>
                               </tr>';
